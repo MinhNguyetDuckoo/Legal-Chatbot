@@ -1,0 +1,77 @@
+1. Chuẩn bị Môi trường (Prerequisites)
+Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đặt các phần mềm sau:
+
+Python 3.10+: Để chạy Backend.
+Node.js (LTS): Để chạy giao diện Frontend.
+Docker Desktop: Cần thiết để tự động khởi tạo cơ sở dữ liệu.
+Ollama: (Tùy chọn) Nếu bạn muốn chạy mô hình AI trực tiếp trên máy.
+CAUTION
+
+Phải chắc chắn ứng dụng Docker Desktop đang được mở và biểu tượng con cá voi chuyển sang màu xanh (Running) trước khi thực hiện các bước tiếp theo.
+
+🗄️ 2. Khởi tạo Cơ sở dữ liệu (Postgres & Redis)
+Hệ thống sử dụng Docker để tạo Database tự động, giúp bạn không cần cài đặt phần mềm Database nặng nề.
+
+Mở Terminal (PowerShell) và di chuyển vào thư mục Backend:
+powershell
+
+cd d:\chatbot\source_project\backend
+Gõ lệnh sau để khởi động Database:
+powershell
+
+docker-compose up -d
+Chờ đến khi dòng chữ Started hiện lên cho cả 3 container (Postgres, pgAdmin, Redis).
+TIP
+
+Bạn có thể kiểm tra danh sách container đang chạy bằng lệnh docker ps.
+
+⚙️ 3. Thiết lập Backend & Cấu hình Bảng
+Bước 3.1: Tạo môi trường ảo và cài thư viện Vẫn tại thư mục backend, chạy các lệnh sau:
+
+powershell
+
+# Tạo môi trường ảo (Nếu bạn chưa có thư mục venv)
+python -m venv venv
+# Kích hoạt môi trường ảo
+.\venv\Scripts\Activate.ps1
+# Cài đặt thư viện
+pip install -r requirements.txt
+Bước 3.2: Khởi tạo các bảng dữ liệu (Migrations) Cấu trúc các bảng (users, lịch sử chat) sẽ được tự động đổ vào Postgres bằng công cụ Alembic:
+
+powershell
+
+alembic upgrade head
+(Nếu không có báo lỗi đỏ, hệ thống DB của bạn đã hoàn hảo).
+
+Bước 3.3: Tự cấu hình AI nội bộ (Ollama) Nếu bạn muốn dùng AI miễn phí trên máy, hãy sửa file backend\.env:
+
+env
+
+LLM_MODEL="qwen2.5:7b" 
+OLLAMA_API_KEY="" 
+LLM_BASE_URL="http://localhost:11434"
+Bước 3.4: Bật Server Backend
+
+powershell
+
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+IMPORTANT
+
+Hãy thu nhỏ cửa sổ Terminal này lại, tuyệt đối không tắt nó đi vì nó là trái tim của hệ thống.
+
+🌐 4. Khởi chạy Giao diện Frontend (Cửa sổ Chat)
+Bây giờ chúng ta sẽ bật giao diện để người dùng nhắn tin.
+
+Mở một cửa sổ Terminal hoàn toàn mới.
+Di chuyển vào thư mục Frontend:
+powershell
+
+cd d:\chatbot\source_project\frontend
+Cài đặt các gói thư viện giao diện:
+powershell
+
+npm install
+Chạy giao diện lên:
+powershell
+
+npm run dev
