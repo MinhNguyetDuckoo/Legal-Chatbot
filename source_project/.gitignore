@@ -1,0 +1,59 @@
+# Model files and checkpoints
+embedding_supper_legal/
+embedding_supper_legal_final/
+embedding_supper_legal_final_2/
+embedding_supper_legal_final_2/
+finetune_model_embedding/embedding_supper_legal_final/
+*.safetensors
+*.pt
+*.bin
+# Model checkpoints
+*.safetensors
+*.pt
+*.bin
+
+# Training datasets
+data/
+
+# Model archives
+*.zip
+
+# Large datasets
+data/
+*.csv
+*.jsonl
+
+# Model archives
+*.zip
+
+# Generated databases
+build_database/target_db/
+source_project/rag_storage/
+
+# Credentials and secrets
+.env
+.env.*
+*password*
+*credential*
+*secret*
+Neo4j-*.txt
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+.env
+.env.*
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+node_modules/
+dist/
+rag_storage/
+*.log
